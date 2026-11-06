@@ -47,6 +47,28 @@ button:hover{background:var(--ochre-deep)}
 footer{border-top:1px solid var(--line);background:var(--stone-deep);font-size:14px;color:var(--muted);padding:22px 0}
 footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 
+.contact{border-top:1px solid var(--line);padding:64px 0 72px}
+.contact .wrap{max-width:560px}
+.contact h2{font-family:"Cormorant SC",Georgia,serif;font-weight:700;font-size:clamp(34px,6vw,52px);line-height:1;letter-spacing:.02em;margin:0 0 10px;text-align:center}
+.contact .lede{color:var(--muted);text-align:center;margin:0 0 32px}
+.contact form{max-width:none}
+.contact .field{margin:0 0 18px}
+.contact .field label{color:var(--sea)}
+.contact .field input,.contact .field textarea{width:100%;background:#16241f;border:2px solid var(--line);color:var(--ink);font:inherit;padding:12px 14px;border-radius:0}
+.contact .field textarea{min-height:150px;resize:vertical}
+.contact .field input:hover,.contact .field textarea:hover{border-color:#3a5249}
+.contact .field input:focus,.contact .field textarea:focus{outline:none;border-color:var(--ochre)}
+.contact .field input::placeholder{color:#7d8c85}
+.check{display:flex!important;gap:12px;align-items:flex-start;font-weight:400!important;font-size:16px!important;line-height:1.45;margin:6px 0 26px!important;cursor:pointer}
+.check input{appearance:none;flex:none;width:20px;height:20px;margin:2px 0 0;border:2px solid var(--muted);background:transparent;display:grid;place-content:center;cursor:pointer}
+.check input:checked{background:var(--ochre);border-color:var(--ochre)}
+.check input:checked::after{content:"";width:10px;height:6px;border:solid var(--stone);border-width:0 0 2px 2px;transform:translateY(-1px) rotate(-45deg)}
+.check small{display:block;color:var(--muted);font-size:14px}
+.contact button{padding:14px 26px}
+.cstatus{min-height:1.6em;margin:14px 0 0;font-size:15px;color:var(--muted)}
+.cstatus.ok{color:var(--sea)}
+.cstatus.err{color:#ff8a7a}
+
 @media(max-width:560px){
   .wrap{padding:0 18px}
   .hero{padding:48px 0 40px}
@@ -95,6 +117,45 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 </form>
 
 </div></div></main>
+
+<section class="contact" id="contact" aria-labelledby="contact-title">
+  <div class="wrap">
+    <h2 id="contact-title">Send word</h2>
+    <p class="lede">A project, a question, or a story to tell? Write to us.</p>
+    <form id="contact-form" action="https://api.web3forms.com/submit" method="POST">
+      <input type="hidden" name="access_key" value="7d783d63-92f8-4aae-b6c3-2d317c190f1e">
+      <input type="hidden" name="subject" value="New message from axemacana.com">
+      <input type="hidden" name="from_name" value="axemacana.com">
+      <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <div class="field"><label for="c-name">Name</label><input id="c-name" name="name" autocomplete="name" required></div>
+      <div class="field"><label for="c-email">Email</label><input id="c-email" type="email" name="email" autocomplete="email" placeholder="you@studio.com" required></div>
+      <div class="field"><label for="c-msg">Message</label><textarea id="c-msg" name="message" required></textarea></div>
+      <label class="check"><input type="checkbox" name="newsletter" value="Yes, add me to the launch list"><span>Add me to the Axe Macana list<small>One email when we launch. No spam.</small></span></label>
+      <button type="submit" id="send-btn">Send message</button>
+      <p class="cstatus" id="form-status" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
+<script>
+(function(){
+  var f=document.getElementById('contact-form'); if(!f||!window.fetch) return;
+  var st=document.getElementById('form-status'), btn=document.getElementById('send-btn'), busy=false;
+  f.addEventListener('submit',function(e){
+    e.preventDefault(); if(busy) return; busy=true;
+    btn.textContent='Sending…'; st.className='cstatus'; st.textContent='';
+    var data=new FormData(f), join=!!data.get('newsletter'); if(!join) data.set('newsletter','No');
+    if(join){var k=new FormData(); k.set('email_address',data.get('email')); fetch('https://app.kit.com/forms/10152137/subscriptions',{method:'POST',body:k,mode:'no-cors'}).catch(function(){});}
+    fetch(f.action,{method:'POST',body:data,headers:{Accept:'application/json'}})
+      .then(function(r){return r.json().then(function(j){return r.ok&&j.success})})
+      .then(function(ok){
+        if(ok){f.reset(); st.className='cstatus ok'; st.textContent='Message sent. Thank you.';}
+        else{st.className='cstatus err'; st.textContent='That did not send. Try again in a minute.';}
+      })
+      .catch(function(){st.className='cstatus err'; st.textContent='That did not send. Check your connection and try again.';})
+      .finally(function(){busy=false; btn.textContent='Send message';});
+  });
+})();
+</script>
 <footer><div class="wrap"><span>Axe Macana · 2026</span></div></footer>
 </body>
 </html>
