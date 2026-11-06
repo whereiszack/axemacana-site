@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta name="theme-color" content="#0f1a17">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Axe Macana</title>
 <meta name="description" content="Axe Macana. A studio for filmmakers and creators. Under construction.">
@@ -10,7 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@600;700&display=swap" rel="stylesheet">
 <style>
 @font-face{font-family:Mulish;src:url(font.woff2) format("woff2");font-weight:200 1000;font-display:swap}
-:root{--stone:#e9e4da;--stone-deep:#ddd6c9;--ink:#2b2724;--muted:#5e5650;--ochre:#9a3b26;--ochre-deep:#7c2e1d;--line:#c9c0b1}
+:root{--stone:#0f1a17;--stone-deep:#0b1411;--ink:#e9e6dc;--muted:#a9b8b0;--ochre:#c9a24a;--ochre-deep:#e0bc66;--sea:#7fb5a0;--line:#24342e}
 *{box-sizing:border-box}
 html,body{min-height:100%}
 body{margin:0;background:var(--stone);color:var(--ink);font:17px/1.65 Mulish,system-ui,sans-serif;display:flex;flex-direction:column;min-height:100vh}
@@ -20,25 +21,25 @@ a:hover{text-decoration-thickness:2px}
 :focus-visible{outline:3px solid var(--ochre);outline-offset:4px}
 .wrap{width:100%;max-width:880px;margin:0 auto;padding:0 32px}
 
-.reel{height:22px;background:var(--ink);
-  background-image:repeating-linear-gradient(90deg,transparent 0 14px,var(--stone) 14px 24px,transparent 24px 38px);
+.reel{height:22px;background:#060c0a;
+  background-image:repeating-linear-gradient(90deg,transparent 0 14px,var(--muted) 14px 24px,transparent 24px 38px);
   background-size:38px 8px;background-repeat:repeat-x;background-position:0 7px}
 
 main{flex:1;display:flex;align-items:center}
 .hero{padding:72px 0 56px;text-align:center}
 .marks{display:block;margin:0 auto 28px;width:min(280px,72%);height:auto}
-.status{font-size:13px;font-weight:800;letter-spacing:.24em;text-transform:uppercase;color:var(--ochre);margin:0 0 14px}
+.status{font-size:13px;font-weight:800;letter-spacing:.24em;text-transform:uppercase;color:var(--sea);margin:0 0 14px}
 h1{font-family:"Cormorant SC",Georgia,serif;font-weight:700;font-size:clamp(52px,11vw,104px);line-height:.95;letter-spacing:.02em;margin:0 0 20px}
 .lead{font-size:20px;color:var(--muted);max-width:34ch;margin:0 auto 40px}
-.triad{font-family:"Cormorant SC",Georgia,serif;font-weight:700;font-size:clamp(20px,3.4vw,28px);letter-spacing:.08em;color:var(--ink);max-width:none}
+.triad{font-family:"Cormorant SC",Georgia,serif;font-weight:700;font-size:clamp(20px,3.4vw,28px);letter-spacing:.08em;color:var(--sea);max-width:none}
 .triad span{color:var(--ochre);margin:0 .35em}
 
 form{max-width:460px;margin:0 auto}
 label{display:block;font-size:14px;font-weight:800;margin:0 0 8px;text-align:left}
-.row{display:flex;gap:0;border:2px solid var(--ink);background:#f6f2ea}
+.row{display:flex;gap:0;border:2px solid var(--ochre);background:#16241f}
 input[type=email]{flex:1;min-width:0;border:0;background:transparent;font:inherit;color:var(--ink);padding:12px 14px}
-input[type=email]::placeholder{color:#8a8178}
-button{border:0;background:var(--ink);color:var(--stone);font:inherit;font-weight:850;letter-spacing:.06em;text-transform:uppercase;font-size:14px;padding:0 22px;cursor:pointer}
+input[type=email]::placeholder{color:#7d8c85}
+button{border:0;background:var(--ochre);color:var(--stone);font:inherit;font-weight:850;letter-spacing:.06em;text-transform:uppercase;font-size:14px;padding:0 22px;cursor:pointer}
 button:hover{background:var(--ochre-deep)}
 .fine{font-size:13px;color:var(--muted);margin:10px 0 0;text-align:left}
 .hp{position:absolute;left:-9999px}
@@ -59,7 +60,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 <div class="reel" aria-hidden="true"></div>
 <main id="main"><div class="wrap"><div class="hero">
 
-<svg class="marks" viewBox="16 0 222 140" aria-hidden="true" fill="none" stroke="#9a3b26" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+<svg class="marks" viewBox="16 0 222 140" aria-hidden="true" fill="none" stroke="#c9a24a" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
   <g transform="translate(140 0) scale(-1 1)">
     <path d="M70 134 V12"/>
     <path d="M70 14 H82 C86 14 90 12 96 8 C104 22 104 44 96 60 C90 52 84 40 82 28 H70"/>
