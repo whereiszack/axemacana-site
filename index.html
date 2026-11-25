@@ -5,7 +5,7 @@
 <meta name="theme-color" content="#040404">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Axe Macana</title>
-<meta name="description" content="Axe Macana makes films and social content for brands and creators. No openings right now.">
+<meta name="description" content="Axe Macana makes films and social content for brands and creators. No openings right now. Weekend shoots in the Pacific Northwest when the dates work.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
@@ -55,7 +55,9 @@ h1{margin:0;max-width:11.5em;font-size:clamp(44px,8.2vw,124px);line-height:.92;f
 .glow .line{inset:0;border-radius:2px;background:linear-gradient(90deg,rgba(110,180,255,.6),rgba(225,240,255,.95) 22%,rgba(110,180,255,.6) 44%,transparent 86%)}
 .glow .haze{left:0;right:20%;top:-8px;height:18px;filter:blur(10px);opacity:.35;background:linear-gradient(90deg,rgba(110,180,255,.6),rgba(225,240,255,.95) 26%,rgba(110,180,255,.6) 52%,transparent)}
 .lower{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:28px 64px}
-.lower p{margin:0;flex:1 1 300px;max-width:24em;font-size:clamp(19px,1.8vw,23px);line-height:1.4;color:var(--sub)}
+.copy{flex:1 1 300px;max-width:24em}
+.copy p{margin:0;font-size:clamp(19px,1.8vw,23px);line-height:1.4;color:var(--sub)}
+.copy p+p{margin-top:.7em}
 
 form{flex:1 1 340px;max-width:460px;display:flex;flex-direction:column;gap:10px}
 form label{font-weight:600;font-size:18px}
@@ -105,7 +107,7 @@ function gcReady(){function go(){goatcounter.count();goatcounter.bind_events();
   <img class="wordmark" src="wordmark.svg" width="280" height="64" alt="Axe Macana">
   <div class="state">
     <span class="tc" id="tc" aria-hidden="true"></span>
-    <span class="working"><span class="dot live"></span><span class="lbl">Fully booked</span></span>
+    <span class="working"><span class="dot live"></span><span class="lbl">Weekdays booked</span></span>
   </div>
 </header>
 
@@ -113,7 +115,10 @@ function gcReady(){function go(){goatcounter.count();goatcounter.bind_events();
   <h1>No openings right now.</h1>
   <div class="glow" aria-hidden="true"><span class="line live"></span><span class="haze live"></span></div>
   <div class="lower">
+    <div class="copy">
     <p>We make films and social content for brands and creators, and help them plan what to post. Right now we have more work than we can take on.</p>
+    <p>We can sometimes fit in a weekend shoot in the Pacific Northwest, or farther away if the dates work.</p>
+    </div>
     <form id="signup" action="https://app.kit.com/forms/10152137/subscriptions" method="post" accept-charset="UTF-8">
       <label for="email">Leave your email and we’ll tell you when we have room.</label>
       <div class="row">
@@ -128,7 +133,7 @@ function gcReady(){function go(){goatcounter.count();goatcounter.bind_events();
 
 <footer>
   <span class="lbl">AxeMacana · 2026</span>
-  <p>Need something sooner? <a href="mailto:hello@axemacana.com">hello@axemacana.com</a></p>
+  <p>Have a weekend shoot in mind? <a href="mailto:hello@axemacana.com">hello@axemacana.com</a></p>
 </footer>
 </div>
 <script>
