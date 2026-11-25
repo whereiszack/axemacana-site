@@ -2,80 +2,74 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="theme-color" content="#0f1a17">
+<meta name="theme-color" content="#040404">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Axe Macana</title>
-<meta name="description" content="Axe Macana. A studio for filmmakers and creators. Under construction.">
+<meta name="description" content="Axe Macana. Most of your best footage is still on the drive. We're building something about it.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
-@font-face{font-family:Mulish;src:url(font.woff2) format("woff2");font-weight:200 1000;font-display:swap}
-:root{--stone:#0f1a17;--stone-deep:#0b1411;--ink:#e9e6dc;--muted:#a9b8b0;--ochre:#c9a24a;--ochre-deep:#e0bc66;--sea:#7fb5a0;--line:#24342e}
+/* Look: BrandToolkit docs/look/LOOK-INSTRUMENT-LIT.md. Colour is state only: blue = work under way. */
+:root{--ink:#f2f2f2;--sub:#a3a3a8;--label:#b2aea8;--heading:#e9e5de;--run:#8ec5ff;--bg:#040404;
+  --sans:"Barlow Semi Condensed","Segoe UI",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,Consolas,monospace}
 *{box-sizing:border-box}
-html,body{min-height:100%}
-body{margin:0;background:var(--stone);color:var(--ink);font:17px/1.65 Mulish,system-ui,sans-serif;display:flex;flex-direction:column;min-height:100vh}
-::selection{background:var(--ochre);color:var(--stone)}
-a{color:var(--ochre);text-underline-offset:.2em}
-a:hover{text-decoration-thickness:2px}
-:focus-visible{outline:3px solid var(--ochre);outline-offset:4px}
-.wrap{width:100%;max-width:880px;margin:0 auto;padding:0 32px}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 18px/1.5 var(--sans)}
+::selection{color:var(--bg);background:var(--heading)}
+a{color:var(--heading);text-underline-offset:4px}
+a:hover{color:#fff}
+:focus-visible{outline:2px solid var(--heading);outline-offset:3px}
 
-.reel{height:22px;background:#060c0a;
-  background-image:repeating-linear-gradient(90deg,transparent 0 14px,var(--muted) 14px 24px,transparent 24px 38px);
-  background-size:38px 8px;background-repeat:repeat-x;background-position:0 7px}
+.page{position:relative;overflow:hidden;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:space-between;gap:56px;
+  padding:clamp(16px,3vw,36px) clamp(16px,5vw,64px) clamp(20px,3vw,36px)}
+.page>*{position:relative}
+/* One room behind everything: warm key top left, cool fill bottom right, still bokeh, a faint grid, a vignette. */
+.page>.light{position:absolute;inset:0;pointer-events:none}
+.room{background:
+  radial-gradient(circle 70px at 71% 24%,rgba(255,190,120,.09) 20%,rgba(255,190,120,.05) 50%,transparent 78%),
+  radial-gradient(circle 30px at 84% 61%,rgba(255,220,180,.10) 24%,rgba(255,220,180,.05) 52%,transparent 78%),
+  radial-gradient(circle 110px at 93% 30%,rgba(120,170,255,.07) 15%,rgba(120,170,255,.04) 48%,transparent 80%),
+  radial-gradient(ellipse 60% 75% at 0% 0%,rgba(255,196,140,.20),transparent 85%),
+  radial-gradient(ellipse 50% 60% at 100% 100%,rgba(90,140,255,.10),transparent 85%)}
+.grid{background:repeating-linear-gradient(90deg,transparent 0 calc(12.5% - 1px),rgba(255,245,230,.035) calc(12.5% - 1px) 12.5%);
+  -webkit-mask-image:linear-gradient(to bottom,transparent,#000 30%,transparent 92%);mask-image:linear-gradient(to bottom,transparent,#000 30%,transparent 92%)}
+.vig{background:radial-gradient(ellipse 90% 85% at 40% 40%,transparent 45%,rgba(0,0,0,.7))}
 
-main{flex:1;display:flex;align-items:center}
-.hero{padding:72px 0 56px;text-align:center}
-.marks{display:block;margin:0 auto 28px;width:min(280px,72%);height:auto}
-.status{font-size:13px;font-weight:800;letter-spacing:.24em;text-transform:uppercase;color:var(--sea);margin:0 0 14px}
-h1{font-family:"Cormorant SC",Georgia,serif;font-weight:700;font-size:clamp(52px,11vw,104px);line-height:.95;letter-spacing:.02em;margin:0 0 20px}
-.lead{font-size:20px;color:var(--muted);max-width:34ch;margin:0 auto 40px}
-.triad{font-family:"Cormorant SC",Georgia,serif;font-weight:700;font-size:clamp(20px,3.4vw,28px);letter-spacing:.08em;color:var(--sea);max-width:none}
-.triad span{color:var(--ochre);margin:0 .35em}
+@keyframes pulse{50%{opacity:.5}}
+.live{animation:pulse 2.4s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.live{animation:none}}
 
-form{max-width:460px;margin:0 auto}
-label{display:block;font-size:14px;font-weight:800;margin:0 0 8px;text-align:left}
-.row{display:flex;gap:0;border:2px solid var(--ochre);background:#16241f}
-input[type=email]{flex:1;min-width:0;border:0;background:transparent;font:inherit;color:var(--ink);padding:12px 14px}
-input[type=email]::placeholder{color:#7d8c85}
-button{border:0;background:var(--ochre);color:var(--stone);font:inherit;font-weight:850;letter-spacing:.06em;text-transform:uppercase;font-size:14px;padding:0 22px;cursor:pointer}
-button:hover{background:var(--ochre-deep)}
-.fine{font-size:13px;color:var(--muted);margin:10px 0 0;text-align:left}
+.lbl{font:600 11px/1.5 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--label)}
+header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 24px}
+.wordmark{height:34px;width:auto;display:block;margin-left:-24px} /* the file has 45 of 280 units of empty space before the A */
+.state{display:flex;align-items:center;gap:14px}
+.tc{font:500 15px var(--mono);color:#d8d4cc;font-variant-numeric:tabular-nums}
+.working{display:inline-flex;align-items:center;gap:8px;padding-left:14px;border-left:1px solid rgba(255,245,230,.12)}
+.working .lbl{color:var(--ink)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--run);box-shadow:0 0 8px rgba(142,197,255,.75),0 0 16px rgba(142,197,255,.75)}
+
+main{display:flex;flex-direction:column;gap:clamp(24px,4vw,44px)}
+h1{margin:0;max-width:11.5em;font-size:clamp(44px,8.2vw,124px);line-height:.92;font-weight:600;letter-spacing:-.04em;color:var(--heading);text-wrap:balance}
+.glow{position:relative;height:2px}
+.glow span{position:absolute;mix-blend-mode:screen}
+.glow .line{inset:0;border-radius:2px;background:linear-gradient(90deg,rgba(110,180,255,.6),rgba(225,240,255,.95) 22%,rgba(110,180,255,.6) 44%,transparent 86%)}
+.glow .haze{left:0;right:20%;top:-8px;height:18px;filter:blur(10px);opacity:.35;background:linear-gradient(90deg,rgba(110,180,255,.6),rgba(225,240,255,.95) 26%,rgba(110,180,255,.6) 52%,transparent)}
+.lower{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:28px 64px}
+.lower p{margin:0;flex:1 1 300px;max-width:24em;font-size:clamp(19px,1.8vw,23px);line-height:1.4;color:var(--sub)}
+
+form{flex:1 1 340px;max-width:460px;display:flex;flex-direction:column;gap:10px}
+form label{font-weight:600;font-size:18px}
+.row{display:flex;flex-wrap:wrap;gap:12px}
+input[type=email]{flex:1 1 220px;min-width:0;min-height:48px;padding:10px 14px;border:0;border-radius:6px;background:rgba(0,0,0,.5);box-shadow:inset 0 2px 6px #000,inset 0 0 0 1px #3a3a3c;color:var(--ink);font:400 17px/1.4 var(--sans)}
+input[type=email]::placeholder{color:#8a8884}
+button{flex:none;min-height:48px;padding:0 22px;border:0;border-radius:6px;cursor:pointer;font:600 16px var(--sans);color:#090909;background:linear-gradient(#fff,#d6d6d6);box-shadow:0 3px 0 #8a8a8a,0 5px 10px rgba(0,0,0,.6)}
+button:active{transform:translateY(2px);box-shadow:0 1px 0 #8a8a8a,0 2px 5px rgba(0,0,0,.6)}
+.fine{font-size:15px;color:var(--sub)}
 .hp{position:absolute;left:-9999px}
 
-footer{border-top:1px solid var(--line);background:var(--stone-deep);font-size:14px;color:var(--muted);padding:22px 0}
-footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
-
-.contact{border-top:1px solid var(--line);padding:64px 0 72px}
-.contact .wrap{max-width:560px}
-.contact h2{font-family:"Cormorant SC",Georgia,serif;font-weight:700;font-size:clamp(34px,6vw,52px);line-height:1;letter-spacing:.02em;margin:0 0 10px;text-align:center}
-.contact .lede{color:var(--muted);text-align:center;margin:0 0 32px}
-.contact form{max-width:none}
-.contact .field{margin:0 0 18px}
-.contact .field label{color:var(--sea)}
-.contact .field input,.contact .field textarea{width:100%;background:#16241f;border:2px solid var(--line);color:var(--ink);font:inherit;padding:12px 14px;border-radius:0}
-.contact .field textarea{min-height:150px;resize:vertical}
-.contact .field input:hover,.contact .field textarea:hover{border-color:#3a5249}
-.contact .field input:focus,.contact .field textarea:focus{outline:none;border-color:var(--ochre)}
-.contact .field input::placeholder{color:#7d8c85}
-.check{display:flex!important;gap:12px;align-items:flex-start;font-weight:400!important;font-size:16px!important;line-height:1.45;margin:6px 0 26px!important;cursor:pointer}
-.check input{appearance:none;flex:none;width:20px;height:20px;margin:2px 0 0;border:2px solid var(--muted);background:transparent;display:grid;place-content:center;cursor:pointer}
-.check input:checked{background:var(--ochre);border-color:var(--ochre)}
-.check input:checked::after{content:"";width:10px;height:6px;border:solid var(--stone);border-width:0 0 2px 2px;transform:translateY(-1px) rotate(-45deg)}
-.check small{display:block;color:var(--muted);font-size:14px}
-.contact button{padding:14px 26px}
-.cstatus{min-height:1.6em;margin:14px 0 0;font-size:15px;color:var(--muted)}
-.cstatus.ok{color:var(--sea)}
-.cstatus.err{color:#ff8a7a}
-
-@media(max-width:560px){
-  .wrap{padding:0 18px}
-  .hero{padding:48px 0 40px}
-  .lead{font-size:18px}
-  .row{flex-direction:column;border-width:2px}
-  button{padding:13px 0}
-}
+footer{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 24px}
+footer p{margin:0;font-size:16px;color:var(--sub)}
+footer a{display:inline-flex;align-items:center;min-height:44px}
 </style>
 <script>
 // GoatCounter: one account for several domains, so prefix paths with the host,
@@ -101,83 +95,51 @@ function gcReady(){function go(){goatcounter.count();goatcounter.bind_events();
 <script data-goatcounter="https://axemacana.goatcounter.com/count" async src="//gc.zgo.at/count.js" onload="gcReady()"></script>
 </head>
 <body>
-<div class="reel" aria-hidden="true"></div>
-<main id="main"><div class="wrap"><div class="hero">
+<div class="page">
+<div class="light room" aria-hidden="true"></div>
+<div class="light grid" aria-hidden="true"></div>
+<div class="light vig" aria-hidden="true"></div>
 
-<svg class="marks" viewBox="16 0 222 140" aria-hidden="true" fill="none" stroke="#c9a24a" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
-  <g transform="translate(140 0) scale(-1 1)">
-    <path d="M70 134 V12"/>
-    <path d="M70 14 H82 C86 14 90 12 96 8 C104 22 104 44 96 60 C90 52 84 40 82 28 H70"/>
-    <path d="M89 20 C94 28 95 38 92 46" stroke-width="2"/>
-    <path d="M64 134 H76"/>
-  </g>
-  <g transform="translate(-48 0)">
-    <path d="M132 70 H148 M154 56 L162 84 M168 56 L160 84"/>
-    <path d="M180 70 m-18 0 a18 18 0 1 0 36 0 a12 12 0 1 0 -24 0 a6 6 0 1 0 12 0"/>
-    <path d="M192 56 L200 84 M206 56 L198 84 M212 70 H228"/>
-  </g>
-  <g transform="translate(-84 0)">
-    <path d="M290 134 V94"/>
-    <path d="M282 94 L278 14 Q290 4 302 14 L298 94 Z"/>
-    <path d="M290 24 V84"/>
-    <path d="M284 134 H296"/>
-  </g>
-</svg>
-
-<p class="status">Under construction</p>
-<h1>Axe Macana</h1>
-<p class="lead triad">Scout <span aria-hidden="true">·</span> Forge <span aria-hidden="true">·</span> Claim</p>
-
-<form action="https://app.kit.com/forms/10152137/subscriptions" method="post" accept-charset="UTF-8">
-  <label for="email">Hear first when we open</label>
-  <div class="row">
-    <input id="email" type="email" name="email_address" placeholder="you@studio.com" autocomplete="email" required>
-    <button type="submit">Notify me</button>
+<header>
+  <img class="wordmark" src="wordmark.svg" width="280" height="64" alt="Axe Macana">
+  <div class="state">
+    <span class="tc" id="tc" aria-hidden="true"></span>
+    <span class="working"><span class="dot live"></span><span class="lbl">Working on it</span></span>
   </div>
-  <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
-  <p class="fine">One email when we launch. No spam. Unsubscribe any time.</p>
-</form>
+</header>
 
-</div></div></main>
-
-<section class="contact" id="contact" aria-labelledby="contact-title">
-  <div class="wrap">
-    <h2 id="contact-title">Send word</h2>
-    <p class="lede">A project, a question, or a story to tell? Write to us.</p>
-    <form id="contact-form" action="https://api.web3forms.com/submit" method="POST">
-      <input type="hidden" name="access_key" value="7d783d63-92f8-4aae-b6c3-2d317c190f1e">
-      <input type="hidden" name="subject" value="New message from axemacana.com">
-      <input type="hidden" name="from_name" value="axemacana.com">
-      <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
-      <div class="field"><label for="c-name">Name</label><input id="c-name" name="name" autocomplete="name" required></div>
-      <div class="field"><label for="c-email">Email</label><input id="c-email" type="email" name="email" autocomplete="email" placeholder="you@studio.com" required></div>
-      <div class="field"><label for="c-msg">Message</label><textarea id="c-msg" name="message" required></textarea></div>
-      <label class="check"><input type="checkbox" name="newsletter" value="Yes, add me to the launch list"><span>Add me to the Axe Macana list<small>One email when we launch. No spam.</small></span></label>
-      <button type="submit" id="send-btn">Send message</button>
-      <p class="cstatus" id="form-status" role="status" aria-live="polite"></p>
+<main id="main">
+  <h1>Most of your best footage is <i>still</i> on the drive.</h1>
+  <div class="glow" aria-hidden="true"><span class="line live"></span><span class="haze live"></span></div>
+  <div class="lower">
+    <p>We know, because we’ve been through <b>A LOT</b> of drives.<br>We’re building something about it.<br>It isn’t ready, and we’d rather show you than describe it.</p>
+    <form action="https://app.kit.com/forms/10152137/subscriptions" method="post" accept-charset="UTF-8">
+      <label for="email">Leave an email. We’ll write once, when there’s something to see.</label>
+      <div class="row">
+        <input id="email" type="email" name="email_address" placeholder="you@example.com" autocomplete="email" required>
+        <button type="submit">Tell me</button>
+      </div>
+      <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <span class="fine">One email. After that it’s up to you.</span>
     </form>
   </div>
-</section>
+</main>
+
+<footer>
+  <span class="lbl">Axe Macana · 2026</span>
+  <p>Something on your mind already? <a href="mailto:hello@axemacana.com">hello@axemacana.com</a></p>
+</footer>
+</div>
 <script>
+// Time of day as timecode at 24 frames a second; once a second when the visitor asks for less motion.
 (function(){
-  var f=document.getElementById('contact-form'); if(!f||!window.fetch) return;
-  var st=document.getElementById('form-status'), btn=document.getElementById('send-btn'), busy=false;
-  f.addEventListener('submit',function(e){
-    e.preventDefault(); if(busy) return; busy=true;
-    btn.textContent='Sending…'; st.className='cstatus'; st.textContent='';
-    var data=new FormData(f), join=!!data.get('newsletter'); if(!join) data.set('newsletter','No');
-    if(join){var k=new FormData(); k.set('email_address',data.get('email')); fetch('https://app.kit.com/forms/10152137/subscriptions',{method:'POST',body:k,mode:'no-cors'}).catch(function(){});}
-    fetch(f.action,{method:'POST',body:data,headers:{Accept:'application/json'}})
-      .then(function(r){return r.json().then(function(j){return r.ok&&j.success})})
-      .then(function(ok){
-        if(ok){f.reset(); st.className='cstatus ok'; st.textContent='Message sent. Thank you.';}
-        else{st.className='cstatus err'; st.textContent='That did not send. Try again in a minute.';}
-      })
-      .catch(function(){st.className='cstatus err'; st.textContent='That did not send. Check your connection and try again.';})
-      .finally(function(){busy=false; btn.textContent='Send message';});
-  });
+  var el=document.getElementById('tc'); if(!el) return;
+  var calm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function p(n){return String(n).padStart(2,'0')}
+  function tick(){var d=new Date();
+    el.textContent=p(d.getHours())+':'+p(d.getMinutes())+':'+p(d.getSeconds())+':'+(calm?'00':p(Math.floor(d.getMilliseconds()*24/1000)))}
+  tick(); setInterval(tick,calm?1000:1000/24);
 })();
 </script>
-<footer><div class="wrap"><span>Axe Macana · 2026</span></div></footer>
 </body>
 </html>
