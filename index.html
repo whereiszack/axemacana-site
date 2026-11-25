@@ -14,6 +14,7 @@
 :root{--ink:#f2f2f2;--sub:#a3a3a8;--label:#b2aea8;--heading:#e9e5de;--run:#8ec5ff;--bg:#040404;
   --sans:"Barlow Semi Condensed","Segoe UI",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,Consolas,monospace}
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 body{margin:0;background:var(--bg);color:var(--ink);font:400 18px/1.5 var(--sans)}
 ::selection{color:var(--bg);background:var(--heading)}
 a{color:var(--heading);text-underline-offset:4px}
@@ -71,6 +72,14 @@ button{flex:none;min-height:48px;padding:0 22px;border:0;border-radius:6px;curso
 button:active{transform:translateY(2px);box-shadow:0 1px 0 #8a8a8a,0 2px 5px rgba(0,0,0,.6)}
 .fine{font-size:15px;color:var(--sub)}
 .fine.err{color:#ff8a7a}
+/* After Send: the form is replaced by this, big enough to notice. Green = sent (the look's "ok"). */
+.sent{flex:1 1 340px;max-width:460px;display:flex;flex-direction:column;gap:10px;padding:22px 22px 20px;border-radius:10px;
+  background:rgba(16,15,15,.55);box-shadow:inset 0 1px 0 rgba(255,245,230,.09),inset 0 0 0 1px rgba(34,224,122,.35),0 18px 40px rgba(0,0,0,.45),0 0 32px rgba(34,224,122,.08);outline:none}
+.sent h2{display:flex;align-items:center;gap:12px;margin:0;font-size:clamp(30px,4vw,40px);line-height:1.05;font-weight:600;letter-spacing:-.02em;color:var(--heading)}
+.sent .ok{width:12px;height:12px;border-radius:50%;flex:none;background:#22e07a;box-shadow:0 0 8px rgba(34,224,122,.75),0 0 16px rgba(34,224,122,.75)}
+.sent p{margin:0;font-size:19px;line-height:1.4;color:var(--ink)}
+.sent .again{align-self:flex-start;min-height:44px;padding:0;background:none;box-shadow:none;color:var(--sub);font:400 16px var(--sans);text-decoration:underline;text-underline-offset:4px}
+.sent .again:active{transform:none}
 .hp{position:absolute;left:-9999px}
 
 footer{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 24px}
@@ -137,6 +146,12 @@ function gcReady(){function go(){goatcounter.count();goatcounter.bind_events();
       <label class="check"><input type="checkbox" id="join"><span>Add me to the email list too</span></label>
       <span class="fine" id="project-note" role="status" aria-live="polite">If it’s the right fit, we’ll find a way to make it work.</span>
     </form>
+    <div class="sent" id="sent" tabindex="-1" hidden>
+      <h2><span class="ok" aria-hidden="true"></span>Got it, thanks.</h2>
+      <p>We’ll read it and write back soon.</p>
+      <p id="sent-list" hidden>One more thing: check your inbox and confirm the email list, or you won’t be on it.</p>
+      <button type="button" class="again" id="again">Send another</button>
+    </div>
   </div>
 </main>
 
@@ -153,8 +168,13 @@ function gcReady(){function go(){goatcounter.count();goatcounter.bind_events();
   var f=document.getElementById('project'); if(!f||!window.fetch||!window.FormData) return;
   var btn=document.getElementById('project-btn'), note=document.getElementById('project-note'), first=note.textContent, busy=false;
   function fail(msg){note.className='fine err'; note.textContent=msg}
-  function done(joined){f.reset(); note.className='fine';
-    note.textContent='Got it. We’ll write back soon.'+(joined?' Check your inbox to confirm the list.':'')}
+  var sent=document.getElementById('sent');
+  function done(joined){f.reset(); note.className='fine'; note.textContent=first;
+    document.getElementById('sent-list').hidden=!joined;
+    f.hidden=true; sent.hidden=false;
+    sent.focus({preventScroll:true});   // moves focus off the field, which also closes a phone keyboard
+    sent.scrollIntoView({block:'center',behavior:'smooth'})}
+  document.getElementById('again').addEventListener('click',function(){sent.hidden=true; f.hidden=false; f.message.focus()});
   f.addEventListener('submit',function(e){
     e.preventDefault(); if(busy) return;
     if(f.botcheck.checked){done(false);return}   // honeypot ticked: a bot, say nothing
@@ -168,6 +188,27 @@ function gcReady(){function go(){goatcounter.count();goatcounter.bind_events();
       .catch(function(){fail('That didn’t send. Check your connection, or email us.')})
       .finally(function(){busy=false; btn.disabled=false; btn.textContent='Send'});
   });
+
+  // Phones: keep the field being typed in above the on-screen keyboard. The visual viewport shrinks when
+  // the keyboard opens; if the field (with its Send row) ends up under it, add room below the page and
+  // scroll it into the part that is still visible. Browsers that already do this see no change.
+  var vv=window.visualViewport; if(!vv) return;
+  var active=null;
+  function fit(){
+    if(!active) return;
+    var cover=Math.max(0,window.innerHeight-vv.height);
+    document.body.style.paddingBottom=cover?cover+'px':'';
+    var target=active.tagName==='TEXTAREA'?active:(active.closest('.row')||active);
+    var r=target.getBoundingClientRect(), top=vv.offsetTop+12, bottom=vv.offsetTop+vv.height-12;
+    if(r.bottom>bottom) window.scrollBy(0,r.bottom-bottom);
+    else if(r.top<top) window.scrollBy(0,r.top-top);
+  }
+  f.addEventListener('focusin',function(e){
+    if(!/^(TEXTAREA|INPUT)$/.test(e.target.tagName)||e.target.type==='checkbox') return;
+    active=e.target; setTimeout(fit,350);   // after the keyboard has slid in
+  });
+  f.addEventListener('focusout',function(){active=null; setTimeout(function(){if(!active) document.body.style.paddingBottom=''},200)});
+  vv.addEventListener('resize',fit);
 })();
 </script>
 <script>
