@@ -199,13 +199,13 @@ function gcReady(){function go(){goatcounter.count();goatcounter.bind_events();
     var cover=Math.max(0,window.innerHeight-vv.height);
     document.body.style.paddingBottom=cover?cover+'px':'';
     var target=active.tagName==='TEXTAREA'?active:(active.closest('.row')||active);
-    var r=target.getBoundingClientRect(), top=vv.offsetTop+12, bottom=vv.offsetTop+vv.height-12;
+    var r=target.getBoundingClientRect(), top=vv.offsetTop+16, bottom=vv.offsetTop+vv.height-32;   // 32: room for the Send key's shadow and a phone's suggestion bar
     if(r.bottom>bottom) window.scrollBy(0,r.bottom-bottom);
     else if(r.top<top) window.scrollBy(0,r.top-top);
   }
   f.addEventListener('focusin',function(e){
     if(!/^(TEXTAREA|INPUT)$/.test(e.target.tagName)||e.target.type==='checkbox') return;
-    active=e.target; setTimeout(fit,350);   // after the keyboard has slid in
+    active=e.target; setTimeout(fit,350); setTimeout(fit,750);   // after the keyboard has slid in, and again after the browser's own scroll
   });
   f.addEventListener('focusout',function(){active=null; setTimeout(function(){if(!active) document.body.style.paddingBottom=''},200)});
   vv.addEventListener('resize',fit);
