@@ -63,7 +63,10 @@ form{flex:1 1 340px;max-width:460px;display:flex;flex-direction:column;gap:10px}
 form label{font-weight:600;font-size:18px}
 .row{display:flex;flex-wrap:wrap;gap:12px}
 input[type=email]{flex:1 1 220px;min-width:0;min-height:48px;padding:10px 14px;border:0;border-radius:6px;background:rgba(0,0,0,.5);box-shadow:inset 0 2px 6px #000,inset 0 0 0 1px #3a3a3c;color:var(--ink);font:400 17px/1.4 var(--sans)}
-input[type=email]::placeholder{color:#8a8884}
+input[type=email]::placeholder,textarea::placeholder{color:#8a8884}
+textarea{width:100%;min-height:96px;resize:vertical;padding:10px 14px;border:0;border-radius:6px;background:rgba(0,0,0,.5);box-shadow:inset 0 2px 6px #000,inset 0 0 0 1px #3a3a3c;color:var(--ink);font:400 17px/1.4 var(--sans)}
+.check{display:flex;align-items:center;gap:10px;min-height:44px;font-weight:400!important;font-size:16px!important;color:var(--sub);cursor:pointer}
+.check input{width:18px;height:18px;margin:0;accent-color:#e9e5de;flex:none}
 button{flex:none;min-height:48px;padding:0 22px;border:0;border-radius:6px;cursor:pointer;font:600 16px var(--sans);color:#090909;background:linear-gradient(#fff,#d6d6d6);box-shadow:0 3px 0 #8a8a8a,0 5px 10px rgba(0,0,0,.6)}
 button:active{transform:translateY(2px);box-shadow:0 1px 0 #8a8a8a,0 2px 5px rgba(0,0,0,.6)}
 .fine{font-size:15px;color:var(--sub)}
@@ -119,43 +122,50 @@ function gcReady(){function go(){goatcounter.count();goatcounter.bind_events();
     <p>We work with brands and creators, and help them plan what to post. Right now we have more work than we can take on.</p>
     <p>We can sometimes fit in an evening or weekend shoot in the Pacific Northwest, or farther away if the dates work.</p>
     </div>
-    <form id="signup" action="https://app.kit.com/forms/10152137/subscriptions" method="post" accept-charset="UTF-8">
-      <label for="email">Want first dibs on our next free weekend?</label>
+    <form id="project" action="https://api.web3forms.com/submit" method="post">
+      <input type="hidden" name="access_key" value="7d783d63-92f8-4aae-b6c3-2d317c190f1e">
+      <input type="hidden" name="subject" value="New project from axemacana.com">
+      <input type="hidden" name="from_name" value="axemacana.com">
+      <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <label for="msg">Got a project? Tell us about it.</label>
+      <textarea id="msg" name="message" rows="3" placeholder="What is it, where, and roughly when?" required></textarea>
       <div class="row">
-        <input id="email" type="email" name="email_address" placeholder="you@example.com" autocomplete="email" required>
-        <button type="submit" id="signup-btn">I’m in</button>
+        <input id="email" type="email" name="email" placeholder="you@example.com" autocomplete="email" aria-label="Your email" required>
+        <button type="submit" id="project-btn">Send</button>
       </div>
-      <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
-      <span class="fine" id="signup-note" role="status" aria-live="polite">You’ll need to confirm it from your inbox.</span>
+      <label class="check"><input type="checkbox" id="join"><span>Add me to the email list too</span></label>
+      <span class="fine" id="project-note" role="status" aria-live="polite">If it’s the right fit, we’ll find a way to make it work.</span>
     </form>
   </div>
 </main>
 
 <footer>
   <span class="lbl">AxeMacana · 2026</span>
-  <p>Have an evening or weekend shoot in mind? <a href="mailto:hello@axemacana.com">hello@axemacana.com</a></p>
+  <p>Rather email? <a href="mailto:hello@axemacana.com">hello@axemacana.com</a></p>
 </footer>
 </div>
 <script>
-// Sign-up: send to Kit in the background and stay on our site. Kit allows this origin and answers JSON
-// ({"status":"success"} or "failed" with messages). Without JavaScript the form still posts to Kit directly.
+// Project form: sends to Web3Forms (which emails us) in the background and stays on the page; Web3Forms
+// answers JSON {"success":true}. If the box is ticked, the address also goes to the Kit list, which sends
+// its own confirm email. Without JavaScript the form posts to Web3Forms directly.
 (function(){
-  var f=document.getElementById('signup'); if(!f||!window.fetch||!window.FormData) return;
-  var btn=document.getElementById('signup-btn'), note=document.getElementById('signup-note'), first=note.textContent, busy=false;
+  var f=document.getElementById('project'); if(!f||!window.fetch||!window.FormData) return;
+  var btn=document.getElementById('project-btn'), note=document.getElementById('project-note'), first=note.textContent, busy=false;
   function fail(msg){note.className='fine err'; note.textContent=msg}
+  function done(joined){f.reset(); note.className='fine';
+    note.textContent='Got it. We’ll write back soon.'+(joined?' Check your inbox to confirm the list.':'')}
   f.addEventListener('submit',function(e){
     e.preventDefault(); if(busy) return;
-    if(f.website.value){location.href='/thanks/';return}   // honeypot filled: a bot, say nothing
-    busy=true; btn.disabled=true; btn.textContent='Adding…'; note.className='fine'; note.textContent=first;
-    var data=new FormData(f); data.delete('website');
-    fetch(f.action,{method:'POST',body:data,headers:{Accept:'application/json'}})
+    if(f.botcheck.checked){done(false);return}   // honeypot ticked: a bot, say nothing
+    busy=true; btn.disabled=true; btn.textContent='Sending…'; note.className='fine'; note.textContent=first;
+    var join=document.getElementById('join').checked;
+    if(join){var k=new FormData(); k.set('email_address',f.email.value);
+      fetch('https://app.kit.com/forms/10152137/subscriptions',{method:'POST',body:k,headers:{Accept:'application/json'}}).catch(function(){})}
+    fetch(f.action,{method:'POST',body:new FormData(f),headers:{Accept:'application/json'}})
       .then(function(r){return r.json()})
-      .then(function(j){
-        if(j&&j.status==='success'){location.href='/thanks/';return}
-        fail('That didn’t go through. Check the address and try again.');
-      })
-      .catch(function(){fail('That didn’t go through. Try again in a minute, or email us.')})
-      .finally(function(){busy=false; btn.disabled=false; btn.textContent='I’m in'});
+      .then(function(j){ if(j&&j.success){done(join);return} fail('That didn’t send. Try again, or email us.') })
+      .catch(function(){fail('That didn’t send. Check your connection, or email us.')})
+      .finally(function(){busy=false; btn.disabled=false; btn.textContent='Send'});
   });
 })();
 </script>
