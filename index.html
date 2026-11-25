@@ -76,6 +76,7 @@ button:active{transform:translateY(2px);box-shadow:0 1px 0 #8a8a8a,0 2px 5px rgb
 footer{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 24px}
 footer p{margin:0;font-size:16px;color:var(--sub)}
 footer a{display:inline-flex;align-items:center;min-height:44px}
+@media (max-width:600px){footer{flex-direction:column-reverse;align-items:flex-start}}  /* on a phone the name goes last, under the email line */
 </style>
 <script>
 // GoatCounter: one account for several domains, so prefix paths with the host,
