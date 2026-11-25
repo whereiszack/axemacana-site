@@ -1,0 +1,26 @@
+/* Shared look for the small text pages (/connect, /post). Same room as the home page:
+   BrandToolkit docs/look/LOOK-INSTRUMENT-LIT.md. Styles tags only, so the pages' markup and words stay as they are. */
+:root{--ink:#f2f2f2;--sub:#a3a3a8;--heading:#e9e5de;--bg:#040404;
+  --sans:"Barlow Semi Condensed","Segoe UI",system-ui,sans-serif}
+*{box-sizing:border-box}
+html{background:var(--bg);color-scheme:dark}
+/* warm key top left, cool fill bottom right, vignette: fixed, so long pages scroll in front of one room */
+html::before{content:"";position:fixed;inset:0;pointer-events:none;background:
+  radial-gradient(ellipse 60% 75% at 0% 0%,rgba(255,196,140,.20),transparent 85%),
+  radial-gradient(ellipse 50% 60% at 100% 100%,rgba(90,140,255,.10),transparent 85%),
+  radial-gradient(ellipse 90% 85% at 40% 40%,transparent 45%,rgba(0,0,0,.7))}
+body{position:relative;margin:0 auto;max-width:42em;padding:104px clamp(16px,5vw,32px) 72px;
+  color:var(--sub);font:400 18px/1.6 var(--sans);
+  /* the wordmark file has 45 of 280 units of empty space before the A, hence the pull to the left */
+  background:url(/wordmark.svg) no-repeat calc(clamp(16px,5vw,32px) - 24px) 32px / auto 34px}
+::selection{color:var(--bg);background:var(--heading)}
+h1{margin:0 0 20px;font-size:clamp(34px,6vw,52px);line-height:1;font-weight:600;letter-spacing:-.03em;color:var(--heading);text-wrap:balance}
+h2{margin:40px 0 8px;padding-top:20px;border-top:1px solid rgba(255,245,230,.09);font-size:22px;line-height:1.2;font-weight:600;letter-spacing:-.01em;color:var(--heading)}
+p{margin:0 0 14px}
+ul{margin:0 0 14px;padding-left:1.2em}
+li{margin:0 0 8px}
+li::marker{color:#7d7b78}
+b{font-weight:600;color:var(--ink)}
+a{color:var(--heading);text-underline-offset:4px}
+a:hover{color:#fff}
+:focus-visible{outline:2px solid var(--heading);outline-offset:3px}
