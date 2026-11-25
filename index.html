@@ -120,10 +120,10 @@ function gcReady(){function go(){goatcounter.count();goatcounter.bind_events();
     <p>We can sometimes fit in an evening or weekend shoot in the Pacific Northwest, or farther away if the dates work.</p>
     </div>
     <form id="signup" action="https://app.kit.com/forms/10152137/subscriptions" method="post" accept-charset="UTF-8">
-      <label for="email">Leave your email and we’ll tell you when we have room.</label>
+      <label for="email">Want first dibs on our next free weekend?</label>
       <div class="row">
         <input id="email" type="email" name="email_address" placeholder="you@example.com" autocomplete="email" required>
-        <button type="submit" id="signup-btn">Add me</button>
+        <button type="submit" id="signup-btn">I’m in</button>
       </div>
       <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
       <span class="fine" id="signup-note" role="status" aria-live="polite">You’ll need to confirm it from your inbox.</span>
@@ -155,7 +155,7 @@ function gcReady(){function go(){goatcounter.count();goatcounter.bind_events();
         fail('That didn’t go through. Check the address and try again.');
       })
       .catch(function(){fail('That didn’t go through. Try again in a minute, or email us.')})
-      .finally(function(){busy=false; btn.disabled=false; btn.textContent='Add me'});
+      .finally(function(){busy=false; btn.disabled=false; btn.textContent='I’m in'});
   });
 })();
 </script>
